@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IRCODE lock-on reticle. Arm 81, border 6, elbow radius 28, offset 37. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" fill="none">
+  <path d="M369.2 270.8 V217.8 A25.0 25.0 0 0 1 394.2 192.8 H447.2 M1472.8 192.8 H1525.8 A25.0 25.0 0 0 1 1550.8 217.8 V270.8 M369.2 809.2 V862.2 A25.0 25.0 0 0 0 394.2 887.2 H447.2 M1472.8 887.2 H1525.8 A25.0 25.0 0 0 0 1550.8 862.2 V809.2" stroke="#FFD600" stroke-width="6"/>
+</svg>
