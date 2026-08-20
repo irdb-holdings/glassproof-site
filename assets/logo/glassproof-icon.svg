@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- GlassProof icon. Brand reticle geometry (arm 81 / border 6 / elbow r 28), square. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <path d="M51.85 152 V83.95 A32.1 32.1 0 0 1 83.95 51.85 H152 M360 51.85 H428.05 A32.1 32.1 0 0 1 460.15 83.95 V152 M51.85 360 V428.05 A32.1 32.1 0 0 0 83.95 460.15 H152 M360 460.15 H428.05 A32.1 32.1 0 0 0 460.15 428.05 V360" stroke="#FFD600" stroke-width="7.7" stroke-linecap="butt" stroke-linejoin="miter"/>
+  <path d="M114.56 262.24 L204 376.64 L387.04 156.16" stroke="#FFFFFF" stroke-width="72.8" stroke-linecap="butt" stroke-linejoin="miter"/>
+</svg>

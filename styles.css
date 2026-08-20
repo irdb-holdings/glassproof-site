@@ -181,12 +181,25 @@ p:last-child { margin-bottom: 0; }
 }
 
 .wordmark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-eyebrow);
   font-weight: 400;
   font-size: 1.35rem;
   letter-spacing: 0.14em;
   color: #FFFFFF;
   text-decoration: none;
+}
+
+.wordmark-icon {
+  width: 30px;
+  height: 30px;
+  display: block;
+  flex: none;
+}
+
+.wordmark .wm-txt {
   padding-top: 3px;   /* Bebas optical baseline */
 }
 
@@ -281,6 +294,98 @@ p:last-child { margin-bottom: 0; }
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+/* Full logo lockup "captured" inside the reticle brackets.
+   Bracket inner area is ~61.5% x ~64.3% of the card; the near-square
+   lockup (1000x888) is height-bound, so 34.5% card width = ~56% of the
+   bracket inner width and clears all four brackets top and bottom. */
+.hero-device .device-logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 34.5%;
+  height: auto;
+  transform: translate(-50%, -50%);
+}
+
+/* Brand scan-sweep overlay (BRAND-GUIDELINES-v2 §09): yellow gradient
+   band sliding -120% → +120% at 950ms, mix-blend-mode screen. Base
+   transform parks it off-card so it is invisible without JS/animation. */
+.device-scan {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 32%,
+    rgba(255, 214, 0, 0.22) 45%,
+    rgba(255, 214, 0, 0.5) 50%,
+    rgba(255, 214, 0, 0.22) 55%,
+    transparent 68%
+  );
+  mix-blend-mode: screen;
+  transform: translate3d(-120%, 0, 0);
+  pointer-events: none;
+}
+
+/* Brand pulse ring (§09, "the system is actively looking"): faint yellow
+   ring behind the logo, scale 1 → 1.18, opacity 0.45 → 0, 2.8s infinite.
+   Base opacity 0 so the no-JS / reduced-motion state stays clean. */
+.device-pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 2px solid var(--yellow);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Capture sequence — plays once when the hero reveals (.in from reveal.js),
+   then settles into the brand pulse-ring idle. Transform/opacity/filter only.
+   Brand reveal choreography (§10): figure itself rises via [data-reveal]
+   (700ms ease-expo); children stagger 150ms — scan pass at 0.1s, bracket
+   lock at 0.25s, logo materialize at 0.4s; pulse idle from 1.2s. The scan
+   pass occupies the first 950ms of a 7s loop (13.57%) for a slow ambient
+   recurrence; between passes the band holds off-card. */
+@keyframes device-scan-pass {
+  0%      { transform: translate3d(-120%, 0, 0); }
+  13.57%  { transform: translate3d(120%, 0, 0); }
+  100%    { transform: translate3d(120%, 0, 0); }
+}
+
+@keyframes device-reticle-lock {
+  from { transform: scale(1.04); }
+  to   { transform: scale(1); }
+}
+
+@keyframes device-logo-materialize {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.92); filter: blur(10px); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0); }
+}
+
+@keyframes device-pulse {
+  from { opacity: 0.45; transform: translate(-50%, -50%) scale(1); }
+  to   { opacity: 0;    transform: translate(-50%, -50%) scale(1.18); }
+}
+
+.js .hero-device.in .device-scan {
+  animation: device-scan-pass 7s var(--ease-quart) 0.1s infinite;
+}
+
+.js .hero-device.in .device-reticle {
+  animation: device-reticle-lock 0.45s var(--ease-overshoot) 0.25s both;
+}
+
+.js .hero-device.in .device-logo {
+  animation: device-logo-materialize 0.7s var(--ease-expo) 0.4s both;
+}
+
+.js .hero-device.in .device-pulse {
+  animation: device-pulse 2.8s var(--ease-quart) 1.2s infinite;
 }
 
 @media (max-width: 900px) {
@@ -932,6 +1037,79 @@ a:focus-visible {
 
 .footer-link:hover, .footer-link:focus-visible { color: #FFFFFF; }
 
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ─── Legal pages (privacy.html / terms.html) ────────────── */
+
+.legal-page { padding: 150px 0 110px; }
+
+.legal-container { max-width: 860px; }
+
+.legal-title {
+  font-size: clamp(38px, 5vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  margin: 22px 0 14px;
+}
+
+.legal-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--s-faint);
+  margin: 0 0 8px;
+}
+
+.legal-note {
+  color: var(--s-mute);
+  font-size: 0.92rem;
+  margin: 0;
+}
+
+.legal-body {
+  margin-top: 44px;
+  font-size: 0.98rem;
+  color: var(--s-mute);
+}
+
+.legal-body h2 {
+  font-size: clamp(22px, 2vw, 27px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  max-width: none;
+  margin: 52px 0 16px;
+  color: var(--s-text);
+}
+
+.legal-body h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 30px 0 10px;
+  color: var(--s-text);
+}
+
+.legal-body p { margin: 0 0 14px; }
+.legal-body ul { margin: 0 0 14px; padding-left: 22px; }
+.legal-body li { margin: 6px 0; }
+.legal-body strong { color: var(--s-text); font-weight: 600; }
+
+.legal-body a {
+  color: var(--spectral);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.35s var(--ease-quart);
+}
+
+.legal-body a:hover, .legal-body a:focus-visible { color: var(--spectral-deep); }
+
 /* ─── Reveal animations (JS-enhanced; content visible without JS) ── */
 
 .js [data-reveal] {
@@ -953,6 +1131,12 @@ a:focus-visible {
     transition: none;
   }
   .btn, .tier-card { transition: none; }
+  .js .hero-device.in .device-scan,
+  .js .hero-device.in .device-reticle,
+  .js .hero-device.in .device-logo,
+  .js .hero-device.in .device-pulse {
+    animation: none;
+  }
 }
 
 /* ─── Mobile refinements ─────────────────────────────────── */
